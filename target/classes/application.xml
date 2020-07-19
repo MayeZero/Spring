@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                 http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--Instantiation with a Constructor-->
+<!--    <bean id="user" class="com.example.spring.model.User"></bean>-->
+
+<!--    Instantiation with a Static Factory Method-->
+<!--    <bean id="user" class="com.example.spring.model.User" factory-method="createInstance">-->
+
+<!--    </bean>-->
+
+<!--    Instance Factory Method-->
+<!--    <bean id="factory" class="com.example.spring.model.InstanceFactory"></bean>-->
+<!--    <bean id="user" factory-bean="factory" factory-method="createInstance"></bean>-->
+
+<!--    Constructor-based dependency injection-->
+<!--    <bean id="user" class="com.example.spring.model.User">-->
+<!--        <constructor-arg name="username" value="g-code"/>-->
+<!--        <constructor-arg index="1" value="123456"/>&lt;!&ndash; start by 0&ndash;&gt;-->
+<!--        <constructor-arg type="int" value="1"/>-->
+<!--        <constructor-arg ref="emp"/>-->
+<!--    </bean>-->
+<!--    <bean id="emp1" class="com.example.spring.model.Emp"/>-->
+
+<!--    Static Factory-->
+<!--    <bean id="user"-->
+<!--        class="com.example.spring.model.StaticFactory" factory-method="createInstance">-->
+<!--        <constructor-arg name="username" value="g-code"/>-->
+<!--        <constructor-arg index="1" value="123456"/>&lt;!&ndash; start by 0&ndash;&gt;-->
+<!--        <constructor-arg type="int" value="1"/>-->
+<!--        <constructor-arg ref="emp"/>-->
+<!--    </bean>-->
+<!--    <bean id="emp" class="com.example.spring.model.Emp"/>-->
+
+<!--    Setter-based dependency injection-->
+    <bean id="user"
+          class="com.example.spring.model.User">
+        <property name="username" value="g-code"/>
+        <property name="password" value="123456" />
+        <property name="sex" >
+            <value>1</value>
+        </property>
+        <property name="emp" ref="emp"/>
+    </bean>
+    <bean id="emp" class="com.example.spring.model.Emp"/>
+</beans>
