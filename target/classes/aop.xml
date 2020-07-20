@@ -1,0 +1,20 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop
+https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <aop:config>
+        <aop:pointcut id="myPointcut" expression="execution(* com.example.spring.service.*.*(..))"/>
+        <aop:aspect id="Aspect" ref="Aspect">
+            <aop:before method="before" pointcut-ref="myPointcut"/>
+            <aop:after method="after" pointcut-ref="myPointcut"/>
+            <aop:after-throwing method="afterThrowing" throwing="e" pointcut-ref="myPointcut"/>
+            <aop:after-returning method="afterReturning" returning="retValue"
+                                 pointcut-ref="myPointcut"/>
+        </aop:aspect>
+    </aop:config>
+    <bean id="Aspect" class="com.example.spring.aop.Aspect"/>
+    <bean id="myService" class="com.example.spring.service.MyService"></bean>
+</beans>

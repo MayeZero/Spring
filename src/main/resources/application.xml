@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans
-                 http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                 http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <aop:aspectj-autoproxy/>
+    <context:component-scan base-package="com.example.spring"/>
 <!--Instantiation with a Constructor-->
 <!--    <bean id="user" class="com.example.spring.model.User"></bean>-->
 
@@ -16,13 +19,13 @@
 <!--    <bean id="user" factory-bean="factory" factory-method="createInstance"></bean>-->
 
 <!--    Constructor-based dependency injection-->
-<!--    <bean id="user" class="com.example.spring.model.User">-->
+<!--    <bean id="user" class="com.example.spring.model.User" init-method="init" destroy-method="destroy">-->
 <!--        <constructor-arg name="username" value="g-code"/>-->
 <!--        <constructor-arg index="1" value="123456"/>&lt;!&ndash; start by 0&ndash;&gt;-->
 <!--        <constructor-arg type="int" value="1"/>-->
 <!--        <constructor-arg ref="emp"/>-->
 <!--    </bean>-->
-<!--    <bean id="emp1" class="com.example.spring.model.Emp"/>-->
+<!--    <bean id="emp" class="com.example.spring.model.Emp"/>-->
 
 <!--    Static Factory-->
 <!--    <bean id="user"-->
@@ -35,18 +38,81 @@
 <!--    <bean id="emp" class="com.example.spring.model.Emp"/>-->
 
 <!--    Setter-based dependency injection-->
-    <bean id="user"
-          class="com.example.spring.model.User">
-        <property name="username" value="g-code"/>
-        <property name="password" value="123456" />
-        <property name="sex" >
-            <value>1</value>
-        </property>
-        <property name="emp" ref="emp"/>
-    </bean>
-    <bean id="emp" class="com.example.spring.model.Emp"/>
+<!--    <bean id="user"-->
+<!--          class="com.example.spring.model.User">-->
+<!--        <property name="username" value="g-code"/>-->
+<!--        <property name="password" value="123456" />-->
+<!--        <property name="sex" >-->
+<!--            <value>1</value>-->
+<!--        </property>-->
+<!--        <property name="emp" ref="emp"/>-->
+<!--    </bean>-->
+<!--    <bean id="emp" class="com.example.spring.model.Emp"/>-->
 
 <!--    depends-on-->
 <!--    <bean id="user" class="com.example.spring.model.User" depends-on="emp">-->
 <!--    <bean id="emp" class="com.example.spring.model.Emp"/>-->
+
+<!--    lazy-init-->
+<!--    <bean id="user" class="com.example.spring.model.User"/>-->
+<!--    <bean id="emp" class="com.example.spring.model.Emp" lazy-init="true"/>-->
+
+<!--    autowire byname-->
+<!--    <bean id="user" class="com.example.spring.model.User" autowire="byName">-->
+<!--        <property name="username" value="g-code"/>-->
+<!--        <property name="password" value="123456"/>-->
+<!--        <property name="sex" value="1"/>-->
+<!--    </bean>-->
+<!--    <bean id="emp" class="com.example.spring.model.Emp">-->
+<!--        <constructor-arg value="9527"/>-->
+<!--        <constructor-arg value="g-code"/>-->
+<!--    </bean>-->
+
+<!--    autowire bytype-->
+<!--    <bean id="user" class="com.example.spring.model.User" autowire="byType"/>-->
+<!--    <bean id="zz"  class="com.example.spring.model.User"/>-->
+
+<!--    autowire Constructor-->
+<!--    <bean id="user" class="com.example.spring.model.User" autowire="constructor">-->
+<!--        <constructor-arg name="username" value="g=code"/>-->
+<!--        <constructor-arg name="password" value="123456"/>-->
+<!--        <constructor-arg name="sex" value="1"/>-->
+<!--    </bean>-->
+<!--    <bean id="emp" class="com.example.spring.model.Emp">-->
+<!--        <constructor-arg value="9527"/>-->
+<!--        <constructor-arg value="zz"/>-->
+<!--    </bean>-->
+
+<!--    autowire-candidate="false" or primary="true"-->
+<!--    <bean id="emp" class="com.example.spring.model.Emp" primary="true"/>-->
+<!--    <bean id="emp1" class="com.example.spring.model.Emp"/>-->
+<!--    <bean id="emp2" class="com.example.spring.model.Emp"/>-->
+    <!-- or -->
+<!--    <bean id="emp" class="com.example.spring.model.Emp"/>-->
+<!--    <bean id="emp1" class="com.example.spring.model.Emp" autowire-candidate="false"/>-->
+<!--    <bean id="emp2" class="com.example.spring.model.Emp" autowire-candidate="false"/>-->
+
+    <bean id="parent" class="com.example.spring.model.Parent">
+        <property name="username" value="g-code"/>
+        <property name="password" value="123456"/>
+    </bean>
+    <bean id="children" class="com.example.spring.model.Children" parent="parent">
+        <property name="password" value="1"/>
+    </bean>
+
+    <bean id="myService" class="com.example.spring.service.MyService">
+
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+    </bean>
 </beans>

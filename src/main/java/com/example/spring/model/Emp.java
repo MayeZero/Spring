@@ -6,6 +6,11 @@ public class Emp {
     String Job;
     Department department;
 
+    public Emp(int empno,String ename){
+        this.Empno=empno;
+        this.Ename=ename;
+    }
+
     public void setEmpno(int empno) {
         Empno = empno;
     }
