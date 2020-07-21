@@ -13,6 +13,11 @@ import java.util.Map;
 public class EmpDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public int getCount() {
         return this.jdbcTemplate.queryForObject("select count(*) as total from emp", Integer.class);
     }
